@@ -6,6 +6,7 @@ import Home from './Home'
 import LoadingBar from 'react-redux-loading-bar'
 import Leaderboard from './Leaderboard'
 import AddPoll from './AddPoll'
+
 class App extends React.Component {
 
 	componentDidMount () {
