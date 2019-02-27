@@ -1,30 +1,24 @@
 import React from 'react'
-import {connect} from 'react-redux'
+// import {connect} from 'react-redux'
 
 
-function AddPoll (props) {	
+export default function AddPoll (props) {	
 	return (
-		<ul>
-			{users.map( user => (
-				<li className='user'
-					key={user.id}>
-					<img className='avatar' src={user.avatarURL} alt='avatar'/>
-					<div>
-						<h1>{user.name}</h1>
-						<p>{user.polls} polls </p>
-						<p>{user.answers} answers </p>
-					</div>
-				</li>
-			))}
-		</ul>
+		<form className='add-form'>
+			<h2>What is your question?</h2>
+			<input type='text' className='input' />
+
+			<h2>What are the options?</h2>
+			<div className='label'>A.</div>
+			<input type='text' className='input' />
+			<div className='label'>A.</div>
+			<input type='text' className='input' />
+			<div className='label'>A.</div>
+			<input type='text' className='input' />
+			<div className='label'>A.</div>
+			<input type='text' className='input' />
+
+			<button className='btn'>Submit</button>
+		</form>
 	)
 }
-
-
-
-// function mapStateToProps (state) {
-
-	
-
-
-// export default connect(mapStateToProps)(AddOikk)
