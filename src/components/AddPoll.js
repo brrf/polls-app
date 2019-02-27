@@ -20,9 +20,9 @@ export default class AddPoll extends React.Component {
 	}
 
 	isDisabled () {
-		const {question, a, b, c, d} = this.this.state
+		const {question, a, b, c, d} = this.state
 
-		return queestion === '' || a === '' || b === '' || c === '' || d === ''
+		return question === '' || a === '' || b === '' || c === '' || d === ''
 	}
 
 	render() {
@@ -74,7 +74,7 @@ export default class AddPoll extends React.Component {
 
 				<button className='btn'
 						type='submit'
-						disabled = 'true'>Submit</button>
+						disabled = {this.isDisabled()}>Submit</button>
 			</form>
 		)
 	}
