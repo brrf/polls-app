@@ -1,13 +1,39 @@
-import React, { Component } from 'react'
+import React from 'react';
+import {handleInitialData} from '../actions/shared'
+import {connect} from 'react-redux'
+import Loading from './Loading'
+import Home from './Home'
+import LoadingBar from 'react-redux-loading-bar'
+import Leaderboard from './Leaderboard'
+import AddPoll from './AddPoll'
+class App extends React.Component {
 
-class App extends Component {
-  render() {
-    return (
-      <div>
-        Starter Code.
-      </div>
-    )
-  }
+	componentDidMount () {
+	this.props.dispatch(handleInitialData())
+	}
+
+	render() {
+
+
+		return (
+			<div>
+				<LoadingBar />
+				{this.props.loading === true
+					? <Loading/>
+					: <Home />
+				}
+				<Leaderboard />
+			</div>
+		)
+	}
 }
 
-export default App
+	function mapStateToProps ({authedUser}) {
+		return {
+			loading: authedUser === null
+		}
+	}
+
+export default connect(mapStateToProps)(App)
+
+
