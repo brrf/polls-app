@@ -1,8 +1,9 @@
-import React from 'react'
-// import {connect} from 'react-redux'
+import React, {Component} from 'react'
+import {connect} from 'react-redux'
+import {handleCreatePoll} from '../actions/polls'
+import LoadingBar from 'react-redux-loading-bar'
 
-
-export default class AddPoll extends React.Component {	
+class AddPoll extends React.Component {	
 	state = {
 		question: '',
 		a: '',
@@ -25,12 +26,20 @@ export default class AddPoll extends React.Component {
 		return question === '' || a === '' || b === '' || c === '' || d === ''
 	}
 
+	handleSubmit = (e) => {
+		e.preventDefault();
+		// go back to home page
+		this.props.dispatch(handleCreatePoll(this.state))
+	}
+
 	render() {
 
 		const {question, a, b, c, d} = this.state;
 
 		return (
-			<form className='add-form'>
+
+			<form className='add-form'
+				  onSubmit={this.handleSubmit}>
 				<h3>What is your question?</h3>
 				<input value={question}
 					   type='text' 
@@ -79,3 +88,5 @@ export default class AddPoll extends React.Component {
 		)
 	}
 }
+
+export default connect()(AddPoll)

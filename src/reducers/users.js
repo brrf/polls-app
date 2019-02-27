@@ -5,6 +5,17 @@ export default function users (state = {}, action) {
 				...state,
 				...action.users
 			}
+		case 'CREATE_POLL' :
+	      const poll = action.poll
+	      const { author, id } = poll
+	      console.log(state[author])
+	      return {
+	        ...state,
+	        [author]: {
+	          ...state[author],
+	          polls: state[author].polls.concat([id])
+	        }
+	      }
 		default: return state
 	}
 }
