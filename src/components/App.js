@@ -6,6 +6,7 @@ import Home from './Home'
 import LoadingBar from 'react-redux-loading-bar'
 import Leaderboard from './Leaderboard'
 import AddPoll from './AddPoll'
+import Poll from './Poll'
 
 class App extends React.Component {
 
@@ -23,8 +24,7 @@ class App extends React.Component {
 					? <Loading/>
 					: <Home />
 				}
-				<Leaderboard />
-				<AddPoll />
+				<Poll match={{params: {id: 'vthrdm985a262al8qx3do'}}} />
 			</div>
 		)
 	}
