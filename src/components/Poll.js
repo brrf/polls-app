@@ -1,13 +1,23 @@
 import React from 'react';
 import {connect} from 'react-redux'
+import {handleAnswerPoll} from '../actions/polls'
 
 class Poll extends React.Component {
 
-	VoteResults (poll, key) {
+	voteResults (poll, key) {
 		const totalVotes = poll.aVotes.length + poll.bVotes.length + poll.cVotes.length + poll.dVotes.length;
 		const localTally = poll[`${key}Votes`].length
 		const percentageTotal = localTally/totalVotes * 100
 		return `${percentageTotal}% (${localTally})`
+	}
+
+	handleAnswer = (answer) => {
+
+		const {poll, authedUser} = this.props;
+		const id = poll.id;
+		this.answered = true;
+
+		this.props.dispatch(handleAnswerPoll({authedUser, id, answer}))
 	}
 
 	render () {
@@ -17,7 +27,6 @@ class Poll extends React.Component {
 			return <p>This poll does not exist!</p>
 		}
 
-		console.log('moshe:', vote)
 		return (
 			<div className='poll-container'>
 				<h1 className='question'>{poll.question}</h1>
@@ -31,13 +40,18 @@ class Poll extends React.Component {
 
 						return (
 						  <li className={`option ${vote === key[0] ? 'chosen' : ''}`}
-							  key={key}>
+							  key={key}
+							  onClick={ () => {
+							  	if (vote === null && !this.answered) {
+							  		this.handleAnswer(key[0])
+							  	}
+							  }}>
 							{vote === null 
 							  ? poll[key]
 							  : <div className='result'>
 								  	<span>{poll[key]}</span>
 								  	<span>
-								  		{this.VoteResults(poll, key[0])}
+								  		{this.voteResults(poll, key[0])}
 								  	</span>
 							  	</div>
 							}
@@ -76,8 +90,7 @@ function mapStateToProps ({authedUser, polls, users}, {match}) {
 		poll,
 		vote,
 		authorAvatar: users[poll.author].avatarURL
-	}
-	
+	}	
 }
 
 export default connect(mapStateToProps)(Poll)

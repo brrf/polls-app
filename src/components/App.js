@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {Component, Fragment} from 'react';
+import {BrowserRouter as Router, Route} from 'react-router-dom'
 import {handleInitialData} from '../actions/shared'
 import {connect} from 'react-redux'
 import Loading from './Loading'
@@ -7,6 +8,7 @@ import LoadingBar from 'react-redux-loading-bar'
 import Leaderboard from './Leaderboard'
 import AddPoll from './AddPoll'
 import Poll from './Poll'
+import Nav from './Nav'
 
 class App extends React.Component {
 
@@ -18,14 +20,23 @@ class App extends React.Component {
 
 
 		return (
-			<div>
-				<LoadingBar />
-				{this.props.loading === true
-					? <Loading/>
-					: <Home />
-				}
-				<Poll match={{params: {id: 'vthrdm985a262al8qx3do'}}} />
-			</div>
+			<Router>
+				<Fragment>
+					<div className='container'>
+						<LoadingBar />
+						<Nav />
+						{this.props.loading === true
+							? <Loading/>
+							: <div>
+								<Route path='/' exact component={Home} />
+								<Route path='/leaderboard' component={Leaderboard} />
+								<Route path='/poll/:id' component={Poll} />
+								<Route path='/add' component={AddPoll} />
+							  </div>
+						}
+					</div>
+				</Fragment>
+			</Router>
 		)
 	}
 }

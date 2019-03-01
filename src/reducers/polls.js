@@ -10,6 +10,18 @@ export default function polls (state = {}, action) {
 				...state,
 				[action.poll.id]: action.poll
 			}
+		case 'ANSWER_POLL':
+			const {id, authedUser, answer} = action
+			const poll = state[id]
+			const votesKey = answer + 'Votes'
+
+			return  {
+				...state,
+					[action.id]: {
+						...poll,
+						[votesKey]: poll[votesKey].concat([authedUser])			
+					}
+			}		
 		default: return state
 	}
 }

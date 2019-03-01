@@ -1,4 +1,4 @@
-import {savePoll} from '../utils/api'
+import {savePoll, savePollAnswer} from '../utils/api'
 import {showLoading, hideLoading} from 'react-redux-loading-bar'
 
 export function receivePolls (polls) {
@@ -25,10 +25,25 @@ export function handleCreatePoll (poll) {
 			author: authedUser
 		})
 		.then( (poll) => dispatch(createPoll(poll)))
-		.then(dispatch(hideLoading()))
+		.then(() => dispatch(hideLoading()))
 		}
 }
 
-// function answerPoll () {
+function answerPoll ({authedUser, id, answer}) {
+	return {
+		type: 'ANSWER_POLL',
+		authedUser,
+		id,
+		answer
+	}
+}
 
-// }
+export function handleAnswerPoll (answerData) {
+
+	return (dispatch) => {
+		dispatch(showLoading());
+		return savePollAnswer(answerData)
+			.then( () => dispatch(answerPoll(answerData)))
+			.then (() => dispatch(hideLoading()))
+	}
+}

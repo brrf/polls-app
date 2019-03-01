@@ -1,5 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux'
+import {Link} from 'react-router-dom'
 
 
 
@@ -44,7 +45,9 @@ class Home extends React.Component {
 					{dashboardValue.map( (poll) => (
 						<li key={poll.id}
 							className='dashboard-list'>
-							<a>{poll.question}</a>
+							<Link to={`poll/${poll.id}`}>
+								{poll.question}
+							</Link>
 						</li>
 					))}
 				</ul>

@@ -8,7 +8,6 @@ export default function users (state = {}, action) {
 		case 'CREATE_POLL' :
 	      const poll = action.poll
 	      const { author, id } = poll
-	      console.log(state[author])
 	      return {
 	        ...state,
 	        [author]: {
@@ -16,6 +15,15 @@ export default function users (state = {}, action) {
 	          polls: state[author].polls.concat([id])
 	        }
 	      }
+	    case 'ANSWER_POLL':
+	    	const user = state[action.authedUser]
+	    	return {
+	    		...state,
+	    		[action.authedUser]: {
+	    			...user,
+	    			answers: user.answers.concat([action.id])
+	    		}
+	    	}
 		default: return state
 	}
 }
